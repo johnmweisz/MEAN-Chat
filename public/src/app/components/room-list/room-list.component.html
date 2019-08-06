@@ -1,0 +1,18 @@
+<div class="table-responsive">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Room</th>
+                <th scope="col">Creator</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor='let room of rooms | async'>
+                <th scope="row">{{ room.name }}</th>
+                <td>{{ room.admins[0].first_name }}</td>
+                <td class="form-inline"><button class="join" *ngIf="!isJoined(room._id)" (click)='joinRoom(room._id)'>join</button><button class="remove" *ngIf="isAdmin(room.admins)" (click)='removeRoom(room._id, room.admins)'>remove</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

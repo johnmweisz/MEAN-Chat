@@ -1,0 +1,22 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+   <a class="navbar-brand" href="" (click)="false">Chat App</a>
+   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+   </button>
+   <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+         <li class="nav-item active">
+            <a class="nav-link" id="register" *ngIf="!loggedIn" [routerLink]="['register']">Register</a>
+            <a class="nav-link" id="chat" *ngIf="loggedIn" [routerLink]="['chat']">Chat</a>
+         </li>
+         <li class="nav-item active">
+            <a class="nav-link" id="login" *ngIf="!loggedIn" [routerLink]="['login']">Login</a> 
+            <a class="nav-link" id="logout" *ngIf="loggedIn" (click)="logout()" [routerLink]="['login']">Logout</a>
+         </li>
+      </ul>
+   </div>
+</nav>
+<div class="container-fluid">
+      <router-outlet></router-outlet>
+</div>
+

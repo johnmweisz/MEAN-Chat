@@ -1,0 +1,20 @@
+<div>
+    <form #valForm='ngForm' (ngSubmit)="login()">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input class="form-control" type="email" name="email" required #valEmail='ngModel' [(ngModel)]="email" placeholder="email">
+            <div *ngIf="errors && errors.email">
+                <p>{{ errors.email.message }}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input class="form-control" type="password" name="password" required #valPassword='ngModel' [(ngModel)]="password" placeholder="password">
+            <div *ngIf="errors && errors.password">
+                <p>{{ errors.password.message }}</p>
+            </div>
+        </div>
+        <button class="btn btn-danger" *ngIf="!valForm.valid" type="button">Submit</button>
+        <button class="btn btn-primary" *ngIf="valForm.valid" type="submit">Submit</button>
+    </form>
+</div>
