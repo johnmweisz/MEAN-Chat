@@ -12,10 +12,9 @@ import { Message } from '../../models/message';
 export class RoomComponent implements OnInit, OnDestroy {
   room: Room;
   message: Message;
-  user:object;
-
+  user: object;
   private _roomSub: Subscription;
-  
+
   constructor(private RS: RoomService) { }
 
   ngOnInit() {
@@ -31,7 +30,7 @@ export class RoomComponent implements OnInit, OnDestroy {
 
   updateRoom() {
     this.RS.updateRoom(this.room._id, this.message);
-    this.message.message = "";
+    this.message.message = '';
   }
 
 }
