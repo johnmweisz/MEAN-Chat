@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewChecked, ViewChild, ElementRef, AfterViewInit, ViewChildren } from '@angular/core';
 import { RoomService } from '../../services/room.service';
 import { Subscription } from 'rxjs';
 import { Room } from '../../models/room';
@@ -9,7 +9,8 @@ import { Message } from '../../models/message';
   templateUrl: './room.component.html',
   styleUrls: ['./room.component.css']
 })
-export class RoomComponent implements OnInit, OnDestroy {
+export class RoomComponent implements OnInit, AfterViewChecked, AfterViewInit, OnDestroy {
+  @ViewChild('autoDown', {static: true}) chatWindow: ElementRef;
   room: Room;
   message: Message;
   user: object;
@@ -24,13 +25,25 @@ export class RoomComponent implements OnInit, OnDestroy {
     this._roomSub = this.RS.currentRoom.subscribe( room => this.room = room);
   }
 
-  ngOnDestroy() {
-    this._roomSub.unsubscribe();
+  ngAfterViewInit() {
+    this.scrollBottom();
+  }
+
+  ngAfterViewChecked() {
+    this.scrollBottom();
   }
 
   updateRoom() {
     this.RS.updateRoom(this.room._id, this.message);
     this.message.message = '';
+  }
+
+  scrollBottom() {
+    this.chatWindow.nativeElement.scrollTop = this.chatWindow.nativeElement.scrollHeight;
+  }
+
+  ngOnDestroy() {
+    this._roomSub.unsubscribe();
   }
 
 }

@@ -1,8 +1,6 @@
 <div class="form-group chat-box">
-    <div class="form-control room">
-        <div *ngIf="room">
-            <div *ngFor='let message of room.messages'>{{ message.user.first_name }}: {{ message.message }} </div>
-        </div>
+    <div class="form-control room" #autoDown>
+      <div *ngFor='let message of room?.messages'>{{ message['user']['first_name'] }}: {{ message['message'] }}</div>
     </div>
     <div class="form-inline room-send">
         <label class="sr-only" for="message">send message</label>
@@ -10,5 +8,3 @@
         <button class="col-auto form-control button" (click)="updateRoom()">Send</button>
     </div>
 </div>
-
-

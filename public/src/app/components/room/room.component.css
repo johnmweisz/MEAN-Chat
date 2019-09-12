@@ -1,24 +1,24 @@
 .chat-box{
-    height: 400px;
+  height: 400px;
 }
-.room{
-    display: block;
-    height: 90%;
-    overflow: auto
+.room {
+  display: block;
+  height: 90%;
+  overflow: auto
 }
-.room-send{
-    display: block;
-    height: 10%;
-    width: 100%;
-    text-align: right;
+.room-send {
+  display: block;
+  height: 10%;
+  width: 100%;
+  text-align: right;
 }
-.message{
-    width: 80%;
-    height: 100%;
+.message {
+  width: 80%;
+  height: 100%;
 }
-.button{
-    width: 20%;
-    background-color: black;
-    color: white;
-    height: 100%;
+.button {
+  width: 20%;
+  background-color: black;
+  color: white;
+  height: 100%;
 }
