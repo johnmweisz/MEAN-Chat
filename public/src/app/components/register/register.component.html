@@ -3,31 +3,31 @@
         <div class="form-group">
             <label for="first_name">First Name</label>
             <input class="form-control" type="text" name="first_name" required #valFirstName='ngModel' [(ngModel)]="first_name" placeholder="first name">
-            <div *ngIf="errors && errors.first_name">
+            <div *ngIf="errors?.first_name">
                 <p>{{ errors.first_name.message }}</p>
             </div>
         </div>
         <div class="form-group">
             <label for="last_name">Last Name</label>
             <input class="form-control" type="text" name="last_name" required #valLastName='ngModel' [(ngModel)]="last_name" placeholder="last name">
-            <div *ngIf="errors && errors.last_name">
+            <div *ngIf="errors?.last_name">
                 <p>{{ errors.last_name.message }}</p>
             </div>
         </div>
         <div class="form-group">
             <label for="email">Email</label>
             <input class="form-control" type="email" name="email" required #valEmail='ngModel' [(ngModel)]="email" placeholder="email">
-            <div *ngIf="errors && errors.email">
+            <div *ngIf="errors?.email">
                 <p>{{ errors.email.message }}</p>
             </div>
         </div>
         <div class="form-group">
             <label for="password">Password</label>
             <input class="form-control" type="password" name="password" required pattern="^[a-zA-Z]\w{3,14}$" #valPassword='ngModel' [(ngModel)]="password" placeholder="password">
-            <div *ngIf="errors && errors.password">
+            <div *ngIf="errors?.password">
                 <p>{{ errors.password.message }}</p>
             </div>
-            <div *ngIf="valPassword.errors.pattern">
+            <div *ngIf="valPassword?.errors?.pattern">
                 <p>Password must start with a letter, 4 - 15 length, and no special characters</p>
             </div>
         </div>

@@ -3,14 +3,14 @@
         <div class="form-group">
             <label for="email">Email</label>
             <input class="form-control" type="email" name="email" required #valEmail='ngModel' [(ngModel)]="email" placeholder="email">
-            <div *ngIf="errors && errors.email">
+            <div *ngIf="errors?.email">
                 <p>{{ errors.email.message }}</p>
             </div>
         </div>
         <div class="form-group">
             <label for="password">Password</label>
             <input class="form-control" type="password" name="password" required #valPassword='ngModel' [(ngModel)]="password" placeholder="password">
-            <div *ngIf="errors && errors.password">
+            <div *ngIf="errors?.password">
                 <p>{{ errors.password.message }}</p>
             </div>
         </div>
