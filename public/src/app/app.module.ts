@@ -13,8 +13,8 @@ import { LoginComponent } from './components/login/login.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { RoomAddComponent } from './components/room-add/room-add.component';
 
-const config: SocketIoConfig = { 
-  url: 'http://localhost:3000', options: {}
+const config: SocketIoConfig = {
+  url: 'http://13.58.45.179:3000', options: {}
 };
 @NgModule({
   declarations: [
