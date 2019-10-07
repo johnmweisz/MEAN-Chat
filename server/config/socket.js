@@ -59,7 +59,7 @@ io.on('connection', socket => {
                     _id: 'deleted',
                     name: 'Please select a room',
                     admins: [{}],
-                    messages: [{user: {first_name: 'server'}, message: `room will self destruct, please choose a new one`}]
+                    messages: [{user: {first_name: 'server'}, message: `room has been deleted, please choose a new one`}]
                 }
                 io.to(roomId).emit('ChatRoom', doomed_room);
                 //leave room (after room is cleared and sent to user so user sees its deleted)
@@ -87,7 +87,7 @@ io.on('connection', socket => {
         Room.findOneAndUpdate(
             {_id: data.roomId},
             {$push:
-                {messages: {user: {first_name: 'server'}, message: `${data.firstName} has joined`}}
+                {messages: {user: {first_name: 'server'}, message: `${firstName} has joined`}}
             },
             {new:true})
         .then(updatedRoom => {
@@ -213,7 +213,7 @@ io.on('connection', socket => {
         socket.leave(previousId, () => {
             console.log(`Socket ${socket.id} left room ${previousId}`)
             console.log(`Socket ${socket.id} has disconnected`);
-            // Announce user left (good feature, announce user name who quit)
+            // Announce user left
             if ( previousId != '10101010101') {
                 Room.findOneAndUpdate(
                     {_id: previousId},
