@@ -7,12 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChatComponent implements OnInit {
 
-  roomName:string;
+  roomName: string;
 
   constructor() { }
 
   ngOnInit() {
-    this.roomName = 'Please select a room'
+    this.roomName = 'Please select a room';
   }
 
 }

@@ -10,10 +10,10 @@ import { ChatComponent } from '../chat/chat.component';
   styleUrls: ['./room-add.component.css']
 })
 export class RoomAddComponent implements OnInit {
-  name:string;
+  name: string;
   rooms: Observable<Room[]>;
   roomId: string;
-  user:object;
+  user: object;
 
   constructor(
     private RS: RoomService,
@@ -27,7 +27,7 @@ export class RoomAddComponent implements OnInit {
   newRoom() {
     this.RS.newRoom(this.name, this.user);
     this.mainChat.roomName = this.name;
-    this.name = "";
+    this.name = '';
   }
 
 }

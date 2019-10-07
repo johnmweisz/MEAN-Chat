@@ -9,14 +9,14 @@ import { Message } from '../models/message';
 export class RoomService {
   currentRoom = this.socket.fromEvent<Room>('ChatRoom');
   rooms = this.socket.fromEvent<Room[]>('ChatRooms');
-  roomId:string;
-  messages:string[];
-  message:object;
+  roomId: string;
+  messages: string[];
+  message: object;
 
   constructor(private socket: Socket) {}
 
-  joinRoom(id: string) {
-    this.socket.emit('joinRoom', id);
+  joinRoom(roomId: string, firstName: string) {
+    this.socket.emit('joinRoom', {roomId: roomId, firstName: firstName});
   }
 
   removeRoom(id: string) {
@@ -31,12 +31,12 @@ export class RoomService {
     });
   }
 
-  updateRoom(roomId:string, message: Message) {
+  updateRoom(roomId: string, message: Message) {
     this.socket.emit('updateRoom', {roomId: roomId, message: message});
   }
 
   getRooms() {
     this.socket.emit('getRooms');
   }
-  
+
 }

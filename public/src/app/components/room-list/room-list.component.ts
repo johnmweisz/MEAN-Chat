@@ -12,7 +12,7 @@ import { ChatComponent } from '../chat/chat.component';
 export class RoomListComponent implements OnInit, OnDestroy {
   rooms: Observable<Room[]>;
   room: object;
-  user:object;
+  user: object;
 
   private _roomSub: Subscription;
 
@@ -35,33 +35,33 @@ export class RoomListComponent implements OnInit, OnDestroy {
   }
 
   joinRoom(id: string) {
-    this.RS.joinRoom(id);
+    this.RS.joinRoom(id, this.user['first_name']);
   }
 
   removeRoom(id: string, admins: []) {
     if (this.isAdmin(admins)) {
       this.RS.removeRoom(id);
-      return
+      return;
     }
   }
 
   isAdmin(admins: []) {
     for (let admin of admins){
       if (this.user['_id'] == admin['_id']) {
-        return true
+        return true;
       }
-      return false
+      return false;
     }
   }
 
-  isJoined(id: string){
-    if(this.room){
-      if(this.room['_id'] == id){
-        return true
+  isJoined(id: string) {
+    if (this.room) {
+      if (this.room['_id'] == id){
+        return true;
       }
-      return false
+      return false;
     }
-    return false  
+    return false;
     }
 
 }

@@ -75,20 +75,41 @@ io.on('connection', socket => {
 
     });
 
-    socket.on('joinRoom', roomId => {
-        //join new room
-        safeJoin(roomId);
-        //find room in db and emit data to user
-        Room.findOne({_id: roomId})
-        .then(foundRoom => {
-            socket.emit('ChatRoom', foundRoom);
-        })
+    socket.on('joinRoom', data => {
+        const savePrevious = previousId;
+        // Join new room
+        safeJoin(data.roomId);
+        // Announce user has joined and send room data.
+        Room.findOneAndUpdate(
+            {_id: data.roomId},
+            {$push:
+                {messages: {user: {first_name: 'server'}, message: `${data.firstName} has joined`}}
+            },
+            {new:true})
+        .then(updatedRoom => {
+                io.to(data.roomId).emit('ChatRoom', updatedRoom);
+            })
         .catch( err => {
             console.log(err);
         });
+        // Leave previous room
+        if ( savePrevious != '10101010101') {
+            Room.findOneAndUpdate(
+                {_id: savePrevious},
+                {$push:
+                    {messages: {user: {first_name: 'server'}, message: `${data.firstName} has left`}}
+                },
+                {new:true})
+            .then(updatedRoom => {
+                    io.to(savePrevious).emit('ChatRoom', updatedRoom);
+                })
+            .catch( err => {
+                console.log(err);
+            });
+        }
     });
 
-    socket.on('updateRoom', (data) => {// recived as an object roomId, message
+    socket.on('updateRoom', data => {// recived as an object roomId, message
         //push new message object into room object and emit updated room object to all users connected
         Room.findOneAndUpdate(
             {_id: data.roomId},
@@ -104,7 +125,7 @@ io.on('connection', socket => {
         });
     });
 
-    socket.on('addAdmin', (data) => {// recived as an object roomId, admin (user object)
+    socket.on('addAdmin', data => {// recived as an object roomId, admin (user object)
         //push new user object into room object and emit updated room object to all users connected
         Room.findOneAndUpdate(
             {_id: data.roomId},
@@ -120,7 +141,7 @@ io.on('connection', socket => {
         });
     });
 
-    socket.on('removeAdmin', (data) => {// recived as an object roomId, adminId
+    socket.on('removeAdmin', data => {// recived as an object roomId, adminId
         //removes user object from room object and emit updated room object to all users connected
         Room.findOneAndUpdate(
             {_id: data.roomId},
@@ -136,7 +157,7 @@ io.on('connection', socket => {
         });
     });
 
-    socket.on('clearRoom', (roomId) => {
+    socket.on('clearRoom', roomId => {
         //overwrites room messages with a single delete notification
         Room.findOneAndUpdate(
             {_id: data.roomId},
@@ -153,9 +174,9 @@ io.on('connection', socket => {
     });
 
     socket.on('disconnect', () => {
-        //desctroys users chat room
+        //destroys users chat room
         socket.emit('ChatRoom', {});
-        //desctroys users list of rooms
+        //destroys users list of rooms
         socket.emit('ChatRooms', {});
         //user leaves room
         socket.leave(previousId, () => {
