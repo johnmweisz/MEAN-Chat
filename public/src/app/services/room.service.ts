@@ -19,6 +19,10 @@ export class RoomService {
     this.socket.emit('joinRoom', {roomId: roomId, firstName: firstName});
   }
 
+  leaveRoom(roomId: string) {
+    this.socket.emit('leaveRoom', roomId);
+  }
+
   removeRoom(id: string) {
     this.socket.emit('removeRoom', id);
   }

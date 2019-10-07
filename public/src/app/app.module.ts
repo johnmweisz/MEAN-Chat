@@ -14,7 +14,8 @@ import { ChatComponent } from './components/chat/chat.component';
 import { RoomAddComponent } from './components/room-add/room-add.component';
 
 const config: SocketIoConfig = {
-  url: 'http://13.58.45.179', options: {}
+  // url: 'http://13.58.45.179', options: {}
+  url: 'http://localhost:3000', options: {}
 };
 @NgModule({
   declarations: [

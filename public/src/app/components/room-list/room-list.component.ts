@@ -38,6 +38,10 @@ export class RoomListComponent implements OnInit, OnDestroy {
     this.RS.joinRoom(id, this.user['first_name']);
   }
 
+  leaveRoom(id: string) {
+    this.RS.leaveRoom(id);
+  }
+
   removeRoom(id: string, admins: []) {
     if (this.isAdmin(admins)) {
       this.RS.removeRoom(id);

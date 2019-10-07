@@ -11,7 +11,7 @@
             <tr *ngFor='let room of rooms | async'>
                 <th scope="row">{{ room.name }}</th>
                 <td>{{ room.admins[0].first_name }}</td>
-                <td class="form-inline"><button class="join" *ngIf="!isJoined(room._id)" (click)='joinRoom(room._id)'>join</button><button class="remove" *ngIf="isAdmin(room.admins)" (click)='removeRoom(room._id, room.admins)'>remove</button></td>
+                <td class="form-inline"><button class="leave" *ngIf="isJoined(room._id)" (click)='leaveRoom(room._id)'>leave</button><button class="join" *ngIf="!isJoined(room._id)" (click)='joinRoom(room._id)'>join</button><button class="remove" *ngIf="isAdmin(room.admins)" (click)='removeRoom(room._id, room.admins)'>remove</button></td>
             </tr>
         </tbody>
     </table>

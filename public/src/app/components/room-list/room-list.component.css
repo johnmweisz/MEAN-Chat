@@ -11,6 +11,11 @@
     min-width: 70px;
     border-radius: 5px;
 }
+.leave{
+  width: 50%;
+  min-width: 70px;
+  border-radius: 5px;
+}
 .remove{
     width: 50%;
     min-width: 70px;

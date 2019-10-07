@@ -12,6 +12,7 @@ var Room = mongoose.model('Room');
 
 io.on('connection', socket => {
     let previousId = 10101010101;
+    let firstName = '';
 
     const safeJoin = currentId => {
         //leave previous room
@@ -25,6 +26,7 @@ io.on('connection', socket => {
     }
 
     socket.on('addRoom', newRoom => {
+        firstName = newRoom.admins[0].first_name;
         // create new room in db
         let new_Room = new Room(newRoom);
         new_Room.save()
@@ -71,12 +73,14 @@ io.on('connection', socket => {
                     console.log(err);
                 });
         })
-        .catch( err => console.log(err));
-
+        .catch( err => 
+            console.log(err)
+        );
     });
 
     socket.on('joinRoom', data => {
         const savePrevious = previousId;
+        firstName = data.firstName;
         // Join new room
         safeJoin(data.roomId);
         // Announce user has joined and send room data.
@@ -93,11 +97,11 @@ io.on('connection', socket => {
             console.log(err);
         });
         // Leave previous room
-        if ( savePrevious != '10101010101') {
+        if ( savePrevious != '10101010101' && savePrevious != data.roomId) {
             Room.findOneAndUpdate(
                 {_id: savePrevious},
                 {$push:
-                    {messages: {user: {first_name: 'server'}, message: `${data.firstName} has left`}}
+                    {messages: {user: {first_name: 'server'}, message: `${firstName} has left`}}
                 },
                 {new:true})
             .then(updatedRoom => {
@@ -107,6 +111,33 @@ io.on('connection', socket => {
                 console.log(err);
             });
         }
+    });
+
+    socket.on('leaveRoom', data => {
+        const savePrevious = previousId;
+        // Disconnect
+        safeJoin(10101010101);
+        // Leave previous room
+        Room.findOneAndUpdate(
+            {_id: savePrevious},
+            {$push:
+                {messages: {user: {first_name: 'server'}, message: `${firstName} has left`}}
+            },
+            {new:true})
+        .then(updatedRoom => {
+                io.to(savePrevious).emit('ChatRoom', updatedRoom);
+            })
+        .catch( err => {
+            console.log(err);
+        });
+        //send user a 'deleted' room
+        let disconnectedRoom = {
+            _id: 'deleted',
+            name: 'Please select a room',
+            admins: [{}],
+            messages: [{user: {first_name: 'server'}, message: `you have disconnected.`}]
+        }
+        io.emit('ChatRoom', disconnectedRoom);
     });
 
     socket.on('updateRoom', data => {// recived as an object roomId, message
@@ -182,6 +213,21 @@ io.on('connection', socket => {
         socket.leave(previousId, () => {
             console.log(`Socket ${socket.id} left room ${previousId}`)
             console.log(`Socket ${socket.id} has disconnected`);
+            // Announce user left (good feature, announce user name who quit)
+            if ( previousId != '10101010101') {
+                Room.findOneAndUpdate(
+                    {_id: previousId},
+                    {$push:
+                        {messages: {user: {first_name: 'server'}, message: `${firstName} has left`}}
+                    },
+                    {new:true})
+                .then(updatedRoom => {
+                        io.to(previousId).emit('ChatRoom', updatedRoom);
+                    })
+                .catch( err => {
+                    console.log(err);
+                });
+            }
         });
     });
 
