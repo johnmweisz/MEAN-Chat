@@ -13,11 +13,13 @@
   text-align: right;
 }
 .message {
-  width: 80%;
+  display: inline-block;
+  width: calc(100% - 65px);
   height: 100%;
 }
 .button {
-  width: 20%;
+  display: inline-block;
+  width: 65px;
   background-color: black;
   color: white;
   height: 100%;

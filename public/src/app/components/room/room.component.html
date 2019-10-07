@@ -3,7 +3,6 @@
       <div *ngFor='let message of room?.messages'>{{ message['user']['first_name'] }}: {{ message['message'] }}</div>
     </div>
     <div class="form-inline room-send">
-        <label class="sr-only" for="message">send message</label>
         <input name="message" placeholder="message" class="form-control message" [(ngModel)]="message.message" (keyup)="$event.keyCode == 13 && updateRoom()"/>
         <button class="col-auto form-control button" (click)="updateRoom()">Send</button>
     </div>
