@@ -1,5 +1,6 @@
 <div>
     <form #valForm='ngForm' (ngSubmit)="login()">
+        <p>Demo Email: guest@gmail.com - Password: Testing123</p>
         <div class="form-group">
             <label for="email">Email</label>
             <input class="form-control" type="email" name="email" required #valEmail='ngModel' [(ngModel)]="email" placeholder="email">
